@@ -11,7 +11,7 @@ const PLAYER_COLORS = [
   "#1abc9c", // teal
   "#e91e8c", // pink
   "#e2e22a", // yellow
-  "#e67e22", // dark orange
+  "#3b1c00", // brown
   "#00bcd4", // cyan
 ];
 
