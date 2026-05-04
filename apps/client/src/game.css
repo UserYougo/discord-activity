@@ -313,6 +313,92 @@ body {
   font-weight: 700;
 }
 
+/* Peek */
+.peek-btn {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  background: #ff1515;
+  border: 1px solid #404249;
+  border-radius: 20px;
+  color: #b5bac1;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 5px 10px;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.15s, color 0.15s;
+}
+
+.peek-btn:hover {
+  background: #404249;
+  color: #fff;
+}
+
+.peek-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+
+.peek-card {
+  background: #2b2d31;
+  border: 1px solid #404249;
+  border-radius: 16px;
+  padding: 28px 36px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.peek-role-label,
+.peek-word-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #72767d;
+}
+
+.peek-word-label {
+  margin-top: 6px;
+}
+
+.peek-role {
+  font-size: 18px;
+  font-weight: 700;
+  color: #57f287;
+}
+
+.peek-word {
+  font-size: 32px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.peek-close {
+  margin-top: 8px;
+  background: #404249;
+  border: none;
+  border-radius: 8px;
+  color: #dcddde;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 20px;
+  cursor: pointer;
+}
+
+.peek-close:hover {
+  background: #4e505a;
+}
+
 /* Toast */
 .toast {
   position: fixed;
