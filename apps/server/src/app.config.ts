@@ -4,28 +4,15 @@ import { playground } from "@colyseus/playground";
 import { JWT } from "@colyseus/auth";
 import express from "express";
 
-/**
- * Import your Room files
- */
-import { MyRoom } from "./rooms/MyRoom";
 import { UndercoverRoom } from "./rooms/UndercoverRoom";
 
 export default defineServer({
     rooms: {
-        my_room: defineRoom(MyRoom, { filterBy: ['channelId'] }),
         undercover: defineRoom(UndercoverRoom, { filterBy: ['channelId'] }),
     },
 
     express: (app) => {
         app.use(express.json());
-
-        /**
-         * Bind your custom express routes here:
-         * Read more: https://expressjs.com/en/starter/basic-routing.html
-         */
-        app.get("/hello_world", (req, res) => {
-            res.send("It's time to kick ass and chew bubblegum!");
-        });
 
         //
         // Discord Embedded SDK: Retrieve user token when under Discord/Embed
@@ -102,12 +89,5 @@ export default defineServer({
          * Read more: https://docs.colyseus.io/tools/monitor/#restrict-access-to-the-panel-using-a-password
          */
         app.use("/colyseus", monitor());
-
-        //
-        // See more about the Authentication Module:
-        // https://docs.colyseus.io/authentication/
-        //
-        // app.use(auth.prefix, auth.routes())
-        //
     },
 });

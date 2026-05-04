@@ -32,7 +32,7 @@ export default function DescriptionPhase({ gameState, mySessionId, onDescribe }:
 
       <div className="descriptions-list">
         {players.map(([id, player]) => (
-          <div key={id} className={`description-row ${id === mySessionId ? 'mine' : ''}`}>
+          <div key={id} className="description-row" style={{ borderBottom: `5px solid ${player.color}` }}>
             <span className="player-name">
               {player.username}
               {id === mySessionId && <span className="badge">You</span>}

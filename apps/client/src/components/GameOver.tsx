@@ -52,7 +52,7 @@ export default function GameOver({ gameState, mySessionId, me, onPlayAgain }: Pr
       <div className="player-list" style={{ padding: '0 16px' }}>
         <p className="label" style={{ marginBottom: 8 }}>Players</p>
         {players.map(([id, player]) => (
-          <div key={id} className="player-row">
+          <div key={id} className="player-row" style={{ borderLeft: `3px solid ${player.color}` }}>
             <span className="player-name">
               {player.username}
               {id === mySessionId && <span className="badge">You</span>}

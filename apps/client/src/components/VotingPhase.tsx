@@ -29,7 +29,7 @@ export default function VotingPhase({ gameState, mySessionId, onVote }: Props) {
 
       <div className="vote-list">
         {players.map(([id, player]) => (
-          <div key={id} className="vote-card">
+          <div key={id} className="vote-card" style={{ borderLeft: `3px solid ${player.color}` }}>
             <div className="vote-info">
               <span className="player-name">
                 {player.username}

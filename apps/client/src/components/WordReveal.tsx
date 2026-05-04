@@ -8,14 +8,14 @@ interface Props {
 
 const ROLE_INFO: Record<string, { label: string; color: string; desc: string }> = {
   civilian: {
-    label: 'Civilian',
-    color: '#57f287',
-    desc: 'Find the Undercover agent before they outnumber you!',
+    label: '',
+    color: '',
+    desc: '',
   },
   undercover: {
-    label: 'Undercover',
-    color: '#ed4245',
-    desc: "Blend in with the civilians. Don't get caught!",
+    label: '',
+    color: '',
+    desc: '',
   },
   mrwhite: {
     label: 'Mr. White',
@@ -30,7 +30,6 @@ export default function WordReveal({ role, word, onReady }: Props) {
   return (
     <div className="screen center">
       <div className="card" style={{ width: '100%', maxWidth: 380, textAlign: 'center' }}>
-        <p className="label">Your role</p>
         <h2 style={{ color: info.color, fontSize: 28, margin: '8px 0 16px' }}>
           {info.label}
         </h2>

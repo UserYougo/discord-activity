@@ -21,6 +21,7 @@ export interface PlayerData {
   hasDescribed: boolean;
   description: string;
   role: string;
+  color: string;
 }
 
 export interface GameState {
@@ -46,6 +47,7 @@ function stateToPlain(state: any): GameState {
       hasDescribed: player.hasDescribed,
       description: player.description,
       role: player.role,
+      color: player.color,
     };
   });
   return {
@@ -157,6 +159,8 @@ export default function App() {
         <DescriptionPhase
           gameState={gameState}
           mySessionId={mySessionId}
+          myRole={myRole}
+          myWord={myWord}
           onDescribe={(desc) => sendMessage('describe', { description: desc })}
         />
       )}
@@ -165,6 +169,8 @@ export default function App() {
         <VotingPhase
           gameState={gameState}
           mySessionId={mySessionId}
+          myRole={myRole}
+          myWord={myWord}
           onVote={(targetId) => sendMessage('vote', { targetId })}
         />
       )}

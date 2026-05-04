@@ -2,6 +2,19 @@ import { JWT } from "@colyseus/auth";
 import { Room, Client } from "colyseus";
 import { Schema, MapSchema, type } from "@colyseus/schema";
 
+const PLAYER_COLORS = [
+  "#e74c3c", // red
+  "#3498db", // blue
+  "#2ecc71", // green
+  "#f39c12", // orange
+  "#9b59b6", // purple
+  "#1abc9c", // teal
+  "#e91e8c", // pink
+  "#e2e22a", // yellow
+  "#e67e22", // dark orange
+  "#00bcd4", // cyan
+];
+
 const WORD_PAIRS: [string, string][] = [
   ["Coffee", "Tea"],
   ["Cat", "Dog"],
@@ -46,6 +59,7 @@ export class Player extends Schema {
   @type("boolean") hasDescribed: boolean = false;
   @type("string") description: string = "";
   @type("string") role: string = ""; // revealed when eliminated or game over
+  @type("string") color: string = "";
 }
 
 export class UndercoverState extends Schema {
@@ -136,6 +150,7 @@ export class UndercoverRoom extends Room<UndercoverState> {
     player.id = client.auth?.id || client.sessionId;
     player.username = client.auth?.username || "Guest";
     player.isHost = this.state.players.size === 0;
+    player.color = PLAYER_COLORS[this.state.players.size % PLAYER_COLORS.length];
 
     if (player.isHost) {
       this.hostSessionId = client.sessionId;

@@ -16,15 +16,15 @@ export default function Lobby({ gameState, mySessionId, onStart }: Props) {
   return (
     <div className="screen center">
       <div className="card" style={{ width: '100%', maxWidth: 400 }}>
-        <h1 className="title">🕵️ Undercover</h1>
+        <h1 className="title">Hugo's Just Maybe Pretenders</h1>
         <p className="muted" style={{ marginBottom: 24 }}>
-          A social deduction word game
+          Unofficial ripoff of the game Undercover 
         </p>
 
         <div className="player-list">
           <p className="label">Players ({players.length}/10)</p>
           {players.map(([id, player]) => (
-            <div key={id} className="player-row">
+            <div key={id} className="player-row" style={{ borderLeft: `4px solid ${player.color}` }}>
               <span className="player-name">
                 {player.username}
                 {id === mySessionId && <span className="badge">You</span>}
@@ -45,6 +45,7 @@ export default function Lobby({ gameState, mySessionId, onStart }: Props) {
             Waiting for host to start...
           </p>
         )}
+        <p className='muted '>Created by Hugo</p>
       </div>
     </div>
   );

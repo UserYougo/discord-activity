@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Peek Mockup</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #1e1f22;
+    color: #dcddde;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .screen {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: relative;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: #2b2d31;
+    border-bottom: 1px solid #1e1f22;
+  }
+  .label { font-size: 13px; font-weight: 600; color: #fff; }
+  .muted { color: #72767d; font-size: 13px; }
+
+  .descriptions-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .description-row {
+    background: #2b2d31;
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .description-row.mine { border-left: 3px solid #5865f2; }
+
+  .player-name {
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: #5865f2;
+    color: #fff;
+  }
+  .description-text { font-size: 15px; color: #fff; font-style: italic; }
+  .typing { font-style: italic; color: #72767d; }
+
+  .input-area {
+    padding: 12px 16px;
+    background: #2b2d31;
+    border-top: 1px solid #1e1f22;
+    flex-shrink: 0;
+  }
+  .input-row { display: flex; gap: 8px; }
+  .text-input {
+    flex: 1;
+    background: #1e1f22;
+    border: 1px solid #404249;
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: #dcddde;
+    font-size: 14px;
+    outline: none;
+  }
+  .text-input:focus { border-color: #5865f2; }
+  .btn-primary {
+    background: #5865f2;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    width: auto;
+    flex-shrink: 0;
+  }
+
+  /* ── Peek button ── */
+  .peek-btn {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: #313338;
+    border: 1px solid #404249;
+    border-radius: 20px;
+    color: #b5bac1;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    z-index: 10;
+    transition: background 0.15s, color 0.15s;
+  }
+  .peek-btn:hover { background: #404249; color: #fff; }
+  .peek-btn svg { width: 14px; height: 14px; }
+
+  /* ── Peek overlay ── */
+  .peek-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+  }
+  .peek-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .peek-card {
+    background: #2b2d31;
+    border: 1px solid #404249;
+    border-radius: 16px;
+    padding: 28px 36px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .peek-role-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #72767d;
+  }
+  .peek-role {
+    font-size: 18px;
+    font-weight: 700;
+    color: #57f287;
+  }
+  .peek-word-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #72767d;
+    margin-top: 6px;
+  }
+  .peek-word {
+    font-size: 32px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 1px;
+  }
+  .peek-close {
+    margin-top: 12px;
+    background: #404249;
+    border: none;
+    border-radius: 8px;
+    color: #dcddde;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 20px;
+    cursor: pointer;
+  }
+  .peek-close:hover { background: #4e505a; }
+</style>
+</head>
+<body>
+
+<div class="screen">
+
+  <!-- Peek button (top-right corner) -->
+  <button class="peek-btn" onclick="openPeek()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+      <circle cx="12" cy="12" r="3"/>
+    </svg>
+    Peek
+  </button>
+
+  <div class="header">
+    <span class="label">Round 1 — Description Phase</span>
+    <span class="muted">2/4 described</span>
+  </div>
+
+  <div class="descriptions-list">
+    <div class="description-row">
+      <span class="player-name">
+        <span class="dot" style="background:#e74c3c"></span>
+        Alice
+      </span>
+      <span class="description-text">"warm"</span>
+    </div>
+    <div class="description-row">
+      <span class="player-name">
+        <span class="dot" style="background:#3498db"></span>
+        Bob
+      </span>
+      <span class="description-text">"morning"</span>
+    </div>
+    <div class="description-row mine">
+      <span class="player-name">
+        <span class="dot" style="background:#2ecc71"></span>
+        You <span class="badge">You</span>
+      </span>
+      <span class="typing">typing...</span>
+    </div>
+    <div class="description-row">
+      <span class="player-name">
+        <span class="dot" style="background:#f39c12"></span>
+        Dave
+      </span>
+      <span class="muted">—</span>
+    </div>
+  </div>
+
+  <div class="input-area">
+    <p class="label" style="margin-bottom:8px">Your turn! Give one description:</p>
+    <div class="input-row">
+      <input class="text-input" placeholder="One word or short phrase..." maxlength="80" />
+      <button class="btn-primary">Send</button>
+    </div>
+  </div>
+
+  <!-- Peek overlay -->
+  <div class="peek-overlay" id="peekOverlay" onclick="closePeek()">
+    <div class="peek-card" onclick="event.stopPropagation()">
+      <span class="peek-role-label">Your role</span>
+      <span class="peek-role">☕ Civilian</span>
+      <span class="peek-word-label">Your word</span>
+      <span class="peek-word">Coffee</span>
+      <button class="peek-close" onclick="closePeek()">Got it</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function openPeek() {
+    document.getElementById('peekOverlay').classList.add('visible');
+  }
+  function closePeek() {
+    document.getElementById('peekOverlay').classList.remove('visible');
+  }
+</script>
+</body>
+</html>

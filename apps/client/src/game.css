@@ -150,9 +150,6 @@ body {
   gap: 4px;
 }
 
-.description-row.mine {
-  border-left: 3px solid #5865f2;
-}
 
 .description-text {
   font-size: 15px;
@@ -216,6 +213,11 @@ body {
   cursor: pointer;
   transition: background 0.15s;
   width: 100%;
+}
+
+.input-row .btn-primary {
+  width: auto;
+  flex-shrink: 0;
 }
 
 .btn-primary:hover:not(:disabled) {
