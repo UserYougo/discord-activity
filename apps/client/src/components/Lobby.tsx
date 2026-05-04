@@ -11,7 +11,7 @@ export default function Lobby({ gameState, mySessionId, onStart }: Props) {
   const players = Object.entries(gameState.players);
   const me = gameState.players[mySessionId];
   const isHost = me?.isHost;
-  const canStart = players.length >= 1;
+  const canStart = players.length >= 2;
 
   return (
     <div className="screen center">
@@ -35,16 +35,24 @@ export default function Lobby({ gameState, mySessionId, onStart }: Props) {
         </div>
 
         {isHost ? (
+          canStart ? (
           <div style={{ marginTop: 24 }}>
             <button className="btn-primary" onClick={onStart}>
               Start Game
             </button>
           </div>
+          ): (
+            <p className="muted" style={{ marginTop: 24 }}>
+            Need more players to start (min 3)
+          </p>
+          )
         ) : (
           <p className="muted" style={{ marginTop: 24 }}>
             Waiting for host to start...
           </p>
         )}
+        <br />
+        <br />
         <p className='muted '>Created by Hugo</p>
       </div>
     </div>

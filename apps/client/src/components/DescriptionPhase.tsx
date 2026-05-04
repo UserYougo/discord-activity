@@ -4,11 +4,14 @@ import { GameState } from '../App';
 interface Props {
   gameState: GameState;
   mySessionId: string;
+  myRole: string;
+  myWord: string;
   onDescribe: (description: string) => void;
 }
 
-export default function DescriptionPhase({ gameState, mySessionId, onDescribe }: Props) {
+export default function DescriptionPhase({ gameState, mySessionId, myRole, myWord, onDescribe }: Props) {
   const [input, setInput] = useState('');
+  const [peeking, setPeeking] = useState(false);
   const isMyTurn = gameState.currentPlayerId === mySessionId;
   const currentPlayer = gameState.players[gameState.currentPlayerId];
   const me = gameState.players[mySessionId];
@@ -23,6 +26,7 @@ export default function DescriptionPhase({ gameState, mySessionId, onDescribe }:
 
   return (
     <div className="screen">
+
       <div className="header">
         <span className="label">Round {gameState.round} — Description Phase</span>
         <span className="muted" style={{ fontSize: 12 }}>
@@ -32,7 +36,7 @@ export default function DescriptionPhase({ gameState, mySessionId, onDescribe }:
 
       <div className="descriptions-list">
         {players.map(([id, player]) => (
-          <div key={id} className="description-row" style={{ borderBottom: `5px solid ${player.color}` }}>
+          <div key={id} className={`description-row${id === gameState.currentPlayerId && !player.hasDescribed ? ' active-turn' : ''}`} style={{ borderBottom: `5px solid ${player.color}` }}>
             <span className="player-name">
               {player.username}
               {id === mySessionId && <span className="badge">You</span>}
@@ -47,7 +51,27 @@ export default function DescriptionPhase({ gameState, mySessionId, onDescribe }:
           </div>
         ))}
       </div>
+      <button className="peek-btn" onClick={() => setPeeking(true)}>👁 Peek</button>
 
+      {peeking && (
+        <div className="peek-overlay" onClick={() => setPeeking(false)}>
+          <div className="peek-card" onClick={e => e.stopPropagation()}>
+            {myRole === 'mrwhite' ? (
+              <>
+                <span className="peek-word-label">Your role</span>
+                <span className="peek-word">{myRole}</span>
+              </>
+            ) : (
+              <>
+                <span className="peek-word-label">Your word</span>
+                <span className="peek-word">{myWord}</span>
+              </>
+            )}
+            <button className="peek-close" onClick={() => setPeeking(false)}>Got it</button>
+          </div>
+        </div>
+      )}
+      
       <div className="input-area">
         {isMyTurn && !me?.hasDescribed ? (
           <form onSubmit={handleSubmit} className="describe-form">

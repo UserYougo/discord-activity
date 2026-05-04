@@ -27,7 +27,6 @@ export default function Elimination({ gameState }: Props) {
   return (
     <div className="screen center">
       <div className="card" style={{ textAlign: 'center', maxWidth: 360 }}>
-        <p style={{ fontSize: 48, margin: 0 }}>🗳️</p>
         <h2 style={{ margin: '12px 0 4px' }}>{eliminated.username}</h2>
         <p className="muted" style={{ marginBottom: 16 }}>has been eliminated</p>
         <div className="word-box" style={{ color, borderColor: color }}>

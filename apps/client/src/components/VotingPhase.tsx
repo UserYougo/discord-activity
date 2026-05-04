@@ -4,11 +4,15 @@ import { GameState } from '../App';
 interface Props {
   gameState: GameState;
   mySessionId: string;
+  myRole: string;
+  myWord: string;
   onVote: (targetId: string) => void;
 }
 
-export default function VotingPhase({ gameState, mySessionId, onVote }: Props) {
+export default function VotingPhase({ gameState, mySessionId, myRole, myWord, onVote }: Props) {
   const [voted, setVoted] = useState('');
+  const [peeking, setPeeking] = useState(false);
+
   const me = gameState.players[mySessionId];
   const players = Object.entries(gameState.players).filter(([, p]) => !p.isEliminated);
 
@@ -20,6 +24,27 @@ export default function VotingPhase({ gameState, mySessionId, onVote }: Props) {
 
   return (
     <div className="screen">
+      <button className="peek-btn" onClick={() => setPeeking(true)}>👁 Peek</button>
+
+      {peeking && (
+        <div className="peek-overlay" onClick={() => setPeeking(false)}>
+          <div className="peek-card" onClick={e => e.stopPropagation()}>
+            {myRole === 'mrwhite' ? (
+              <>
+                <span className="peek-word-label">Your role</span>
+                <span className="peek-word">🃏 Mr. White</span>
+              </>
+            ) : (
+              <>
+                <span className="peek-word-label">Your word</span>
+                <span className="peek-word">{myWord}</span>
+              </>
+            )}
+            <button className="peek-close" onClick={() => setPeeking(false)}>Got it</button>
+          </div>
+        </div>
+      )}
+
       <div className="header">
         <span className="label">Round {gameState.round} — Vote to Eliminate</span>
         <span className="muted" style={{ fontSize: 12 }}>

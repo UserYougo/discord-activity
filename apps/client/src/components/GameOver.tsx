@@ -8,10 +8,10 @@ interface Props {
   onPlayAgain: () => void;
 }
 
-const WINNER_INFO: Record<string, { emoji: string; label: string; color: string }> = {
-  civilian: { emoji: '🎉', label: 'Civilians Win!', color: '#57f287' },
-  undercover: { emoji: '🕵️', label: 'Undercover Wins!', color: '#ed4245' },
-  mrwhite: { emoji: '🃏', label: 'Mr. White Wins!', color: '#fee75c' },
+const WINNER_INFO: Record<string, {label: string; color: string }> = {
+  civilian: { label: 'Civilians Win!', color: '#57f287' },
+  undercover: { label: 'Undercover Wins!', color: '#ed4245' },
+  mrwhite: {label: 'Mr. White Wins!', color: '#fee75c' },
 };
 
 const ROLE_LABELS: Record<string, string> = {
@@ -27,14 +27,13 @@ const ROLE_COLORS: Record<string, string> = {
 };
 
 export default function GameOver({ gameState, mySessionId, me, onPlayAgain }: Props) {
-  const winner = WINNER_INFO[gameState.winner] ?? { emoji: '🏁', label: 'Game Over', color: '#fff' };
+  const winner = WINNER_INFO[gameState.winner] ?? { label: 'Game Over', color: '#fff' };
   const isHost = me?.isHost;
   const players = Object.entries(gameState.players);
 
   return (
     <div className="screen">
       <div style={{ textAlign: 'center', padding: '24px 16px 16px' }}>
-        <p style={{ fontSize: 48, margin: 0 }}>{winner.emoji}</p>
         <h2 style={{ color: winner.color, margin: '8px 0 4px' }}>{winner.label}</h2>
 
         <div className="word-reveal-row">

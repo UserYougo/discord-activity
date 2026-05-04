@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
     "outDir": "build",
+    "rootDir": "src",
     "target": "ESNext",
     "module": "CommonJS",
-    "moduleResolution": "node",
+    "moduleResolution": "node16",
     "strict": true,
     "allowJs": true,
     "strictNullChecks": false,

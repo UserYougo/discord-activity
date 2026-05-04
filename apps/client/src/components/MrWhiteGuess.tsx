@@ -23,7 +23,6 @@ export default function MrWhiteGuess({ gameState, isMrWhite, onGuess }: Props) {
   return (
     <div className="screen center">
       <div className="card" style={{ textAlign: 'center', maxWidth: 380 }}>
-        <p style={{ fontSize: 40, margin: 0 }}>🤔</p>
         <h2 style={{ margin: '12px 0 4px' }}>Mr. White's Last Chance</h2>
         <p className="muted" style={{ marginBottom: 20 }}>
           {eliminated?.username} was eliminated as Mr. White.
