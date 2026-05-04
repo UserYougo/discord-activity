@@ -8,12 +8,12 @@ import express from "express";
  * Import your Room files
  */
 import { MyRoom } from "./rooms/MyRoom";
+import { UndercoverRoom } from "./rooms/UndercoverRoom";
 
 export default defineServer({
     rooms: {
-        my_room: defineRoom(MyRoom, {
-            filterBy: ['channelId'],
-        }),
+        my_room: defineRoom(MyRoom, { filterBy: ['channelId'] }),
+        undercover: defineRoom(UndercoverRoom, { filterBy: ['channelId'] }),
     },
 
     express: (app) => {
